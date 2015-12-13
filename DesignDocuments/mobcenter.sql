@@ -26,7 +26,7 @@ create table Tsp_server(
 
 create table TspServer_Boh_relation(
 	ID int primary key AUTO_INCREMENT,
-	Bod_ID int,
+	Boh_ID int,
 	Tsp_server_ID	int,
 	ServiceHost text
 );
