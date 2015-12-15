@@ -8,7 +8,7 @@ use mobcenter;
 create table Boh(
 	ID	int primary key AUTO_INCREMENT,
 	Name text not null,
-	BohName text not null,
+	BohName text ,
 	BohMethod text not null,
 	BohRoutePath text not null,
 	BohParameter text,
