@@ -2,12 +2,13 @@ package com.monley.boh;
 
 import java.util.ArrayList;
 
+
 import com.monley.db.Tab_boh;
-import com.monley.db.Tab_tspserver_boh_relation;
 
 public class TspBohRelation {
 	private Tab_boh bohInfo;
 	private ArrayList<TspBohRelationObj> tsp_boh_info;
+	
 	
 	TspBohRelation(Tab_boh bohInfo, ArrayList<TspBohRelationObj> tsp_boh_info){
 		this.bohInfo=bohInfo;

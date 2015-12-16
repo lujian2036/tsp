@@ -9,21 +9,30 @@
     <link rel="stylesheet" type="text/css" href="./themes/icon.css">
     <script type="text/javascript" src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="./js/jquery.easyui.min.js"></script>
-   	
+   	<script>
+    $(document).ready(function(){
+    	json=$.getJSON("./tspinformation",function(data){
+    		$.each(data.rows,function(i,value){
+    			var trtd='<tr><td><label>'+value.name+ '</label></td><td><input name="'+'tsp_'+value.id + '"    required="true"></td></tr>';
+    			$("#tspTable").append(trtd);
+    		});
+	
+    	})});
+   	</script>
 </head>
 <body>
-	<input id="tspNum"  value="3" hidden>
 	<!-- show boh datagrid -->
-    <table id="showbohdlg" class="easyui-datagrid" fit="true"
-            url="./getBohTspInformation"
+    <table id="showbohdlg" class="easyui-datagrid" fit="true" singleSelect="true"
+            url="./getBohTspInformation_new"
             toolbar="#tb"
             rownumbers="true" pagination="true">
         <thead>
             <tr>
-                <th field="BohName" width="80">bohName</th>
-                <th field="BohMethod" width="80">bohMethod</th>
-                <th field="BohRoutePath" width="80" align="right">bohRoutePath</th>
-                <th field="Name" width="80" align="right">name</th>
+            	<th field="ID" width="80">ID</th>
+                <th field="BohName" >BohName</th>
+                <th field="BohMethod" >BohMethod</th>
+                <th field="BohRoutePath"  align="right">BohRoutePath</th>
+                <th field="Name">Name</th>
             </tr>
         </thead>
     </table>
@@ -66,8 +75,8 @@
 			</table>
 			<input  name="sampleTxt" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px" >
 			<!-- tsp module -->
-			 <table cellpadding="5">
-				<tr>
+			 <table id="tspTable" cellpadding="5">
+<!-- 				<tr>
 					<td><label>tsp1_name</label></td>
 					<td><input name="tsp_1"    required="true"></td>
 				</tr>
@@ -78,7 +87,7 @@
 				<tr>
 					<td><label>tsp3_name</label></td>
 					<td><input name="tsp_3"   required="true"></td>
-				</tr>
+				</tr> -->
 			</table>
 		</form>
 	</div>
@@ -97,7 +106,9 @@
 	}
 	
 	function editBoh(){
+		alert("a");
 		var row=$('#showprojdg').datagrid('getSelected');
+		alert(row.id);
 		if(row){
 			$('#modifydlg').dialog('open').dialog('setTitle','修改项目');
 			$('#fm').form('load',row);
