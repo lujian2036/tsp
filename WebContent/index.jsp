@@ -38,7 +38,7 @@
 		     <div id="aa" class="easyui-accordion" fit="true">
 				<div title="功能区">
 					<ul class="easyui-tree">
-						<li>前台网站tsp服务接口</li>
+						<li><a onclick="addTab('前台网站tsp服务接口','showservice.html')">前台网站tsp服务接口</a></li>
 						<li>1</li>
 						<li>2</li>
 					</ul>
