@@ -33,10 +33,10 @@
     <div class="easyui-layout"   fit="true"  >
 <!--         <div data-options="region:'north'" style="height:50px"></div>
         <div data-options="region:'south',split:true" style="height:50px;"></div> -->
-        <div data-options="region:'west',split:true"  style="width:200px;">
+        <div data-options="region:'west',split:true" title="West" style="width:200px;">
         	<!-- accordion -->
-		     <div id="aa" class="easyui-accordion" fit="true"   >
-				<div title="业务展示">	
+		     <div id="aa" class="easyui-accordion" fit="true">
+				<div title="功能区">
 					<ul class="easyui-tree">
 						<li><a onclick="addTab('前台网站tsp服务接口','showservice.html')">前台网站tsp服务接口</a></li>
 						<li>1</li>
@@ -45,7 +45,7 @@
 				</div>
 		        <div title="系统配置">
 		            <ul class="easyui-tree">
-						<li><a onclick='addTab("配置Tsp服务中心","showtsp.jsp")'>配置Tsp服务中心</a></li>
+						<li>配置tsp服务中心</li>
 						<li><a onclick="addTab('配置BOH服务','configureboh.jsp')">配置BOH服务</a></li>
 						<li>待扩展服务...</li>
 					</ul>
@@ -54,7 +54,7 @@
         
         
         </div>
-        <div data-options="region:'center',iconCls:'icon-ok'">
+        <div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
         	<div id="tt" class="easyui-tabs" fit="true">
         	</div>
    		</div>

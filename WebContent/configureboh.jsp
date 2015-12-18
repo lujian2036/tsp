@@ -9,16 +9,16 @@
     <link rel="stylesheet" type="text/css" href="./themes/icon.css">
     <script type="text/javascript" src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="./js/jquery.easyui.min.js"></script>
-<!--    	<script>
+   	<script>
     $(document).ready(function(){
-    	$.getJSON("./tspinformation",function(data){
+    	json=$.getJSON("./tspinformation",function(data){
     		$.each(data.rows,function(i,value){
     			var trtd='<tr><td><label>'+value.name+ '</label></td><td><input name="'+'tsp_'+value.id + '"    required="true"></td></tr>';
     			$("#tspTable").append(trtd);
     		});
 	
     	})});
-   	</script> -->
+   	</script>
 </head>
 <body>
 	<!-- show boh datagrid -->
@@ -41,13 +41,13 @@
     <div id="tb">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newBoh()">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editBoh()">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteBoh()">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deletezBoh()">删除</a>
 	</div>
 	
 	<!-- define boh add/modify dialog -->
 		<div id="modifydlg" class="easyui-dialog" fit="true" closed="true" buttons="#modifydlgbtn">
 		<form id="fm" method="post">
-			 <table cellpadding="5"  width="50%">
+			 <table cellpadding="5"  width="50%" >
 				<tr>
 					<td><label>接口功能概要：</label></td>
 					<td><input name="Name"   class="easyui-validatebox" required=true></td>
@@ -58,13 +58,7 @@
 				</tr>
 				<tr>
 					<td><label>BOH方法</label></td>
-					<td>
-					<select class="easyui-combobox" name="BohMethod"  editable="false"  required=true  width="500px">
-						<option value="GET" selected=true>GET</option>
-						<option value="POST">POST</option>
-					</select>
-					</td>
-					
+					<td><input name="BohMethod"   class="easyui-validatebox" required=true></td>
 				</tr>
 				<tr>
 					<td><label>BOH接口路由</label></td>
@@ -72,9 +66,11 @@
 				</tr>
 				<tr>
 					<td><label>BOH入参</label></td>
-					<td>
-					<input name="BohParameter"  class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px"  >
-					</td>
+<<<<<<< HEAD
+					<td><input name="BohParameter"  class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px"  ></td>
+=======
+					<td><input name="BohParameter"  class="easyui-validatebox"   ></td>
+>>>>>>> 750aae54f03919d0347af7ae9dd78f160adc34bd
 				</tr>
 				<tr>
 					<td><label>描述信息</label></td>
@@ -84,6 +80,18 @@
 			<input  name="SampleTxt" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px" >
 			<!-- tsp module -->
 			 <table id="tspTable" cellpadding="5">
+<!-- 				<tr>
+					<td><label>tsp1_name</label></td>
+					<td><input name="tsp_1"    required="true"></td>
+				</tr>
+				<tr>
+					<td><label>tsp2_name</label></td>
+					<td><input name="tsp_2"   required="true"></td>
+				</tr>
+				<tr>
+					<td><label>tsp3_name</label></td>
+					<td><input name="tsp_3"   required="true"></td>
+				</tr> -->
 			</table>
 		</form>
 	</div>
@@ -94,31 +102,20 @@
 	</div>
 	
 	<script type="text/javascript">
-	//add tsp dynamic
-	$.getJSON("./tspinformation",function(data){
-		$.each(data.rows,function(i,value){
-			var trtd='<tr><td><label>'+value.name+ '</label></td><td><input name="'+'tsp_'+value.id + '"    required="true"></td></tr>';
-			$("#tspTable").append(trtd);
-		});
-
-	});
-	
-	//forbidden auto complete
-	$('input').attr("AUTOCOMPLETE","off");
-	
 	var url;
 	function newBoh(){
-		$('#modifydlg').dialog('open').dialog('setTitle','添加BOH服务');
+		$('#modifydlg').dialog('open').dialog('setTitle','添加项目');
 		$('#fm').form('clear');
 		url='./addboh';
 	}
 	
 	function editBoh(){
 		var row=$('#showbohdlg').datagrid('getSelected');
+		alert(JSON.stringify(row));
 		if(row){
-			$('#modifydlg').dialog('open').dialog('setTitle','修改BOH服务');
+			$('#modifydlg').dialog('open').dialog('setTitle','修改项目');
 			$('#fm').form('load',row);
-			url='./updateboh?id='+row.ID;
+			url='../updateproj?id='+row.id;
 		}
 	}
 	
@@ -146,15 +143,15 @@
 	function deleteBoh(){
 		var row=$('#showbohdlg').datagrid('getSelected');
 		if(row){
-			$.messager.confirm('Confirm','确定删除?',function(r){
+			$.messager.confirm('Confirm','确定删除项目?',function(r){
 				if(r){
-					$.post('./deleteboh',{id:row.ID},function(result){
+					$.post('../deleteproj',{id:row.id},function(result){
 						if(result.success){
 							$('#showbohdlg').datagrid('reload');
 						}else{
 							$.messager.show({
 								title:'error',
-								msg:result.info
+								msg:result.errorMsg
 							});
 						}
 					},'json')

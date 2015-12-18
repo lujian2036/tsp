@@ -55,7 +55,7 @@ public class GetBohTspInformation extends HttpServlet {
 		
 		//get boh
 		try {
-			ResultSet rs = db.query("select ID,Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt from mobcenter.Boh order by id desc limit ?,? ",offset,rows);
+			ResultSet rs = db.query("select ID,Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt from mobcenter.Boh limit ?,?",offset,rows);
 			while(rs.next()){
 				HashMap<String, Object> bohTmp=new HashMap<>();
 				bohTmp.put("ID",rs.getInt("ID"));
