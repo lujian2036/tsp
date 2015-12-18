@@ -53,14 +53,15 @@ public class AddBoH extends HttpServlet {
 		ResultSummary returnRes = new ResultSummary();
 		//get post boh data
 		String name = request.getParameter("Name").trim();
-		String bohName = request.getParameter("BohName").trim();
+		String bohName = request.getParameter("BohName");
 		String bohMethod = request.getParameter("BohMethod").trim();
 		String bohRoutePath = request.getParameter("BohRoutePath").trim();
 		String bohParameter = request.getParameter("BohParameter");
 		String sampleTxt = request.getParameter("SampleTxt");
-		Enumeration<String>  t=request.getParameterNames();
+		
 		
 		if(debug){
+			Enumeration<String>  t=request.getParameterNames();
 			while (t.hasMoreElements()) {
 				String e = (String) t.nextElement();
 				System.out.println(e);
@@ -68,7 +69,7 @@ public class AddBoH extends HttpServlet {
 			
 		}
 		
-		if(name.length()==0||bohName.length()==0||bohMethod.length()==0||bohRoutePath.length()==0){
+		if(name.length()==0||bohMethod.length()==0||bohRoutePath.length()==0){
 			Gson gson = new Gson();
 		    returnRes=new ResultSummary();
 			returnRes.setSuccess(false);
