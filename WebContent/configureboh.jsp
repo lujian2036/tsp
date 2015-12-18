@@ -66,7 +66,11 @@
 				</tr>
 				<tr>
 					<td><label>BOH入参</label></td>
+<<<<<<< HEAD
 					<td><input name="BohParameter"  class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px"  ></td>
+=======
+					<td><input name="BohParameter"  class="easyui-validatebox"   ></td>
+>>>>>>> 750aae54f03919d0347af7ae9dd78f160adc34bd
 				</tr>
 				<tr>
 					<td><label>描述信息</label></td>
