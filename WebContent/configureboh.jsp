@@ -23,7 +23,7 @@
 <body>
 	<!-- show boh datagrid -->
     <table id="showbohdlg" class="easyui-datagrid" fit="true" singleSelect="true"
-            url="./getBohTspInformation_new"
+            url="./getBohTspInformation"
             toolbar="#tb"
             rownumbers="true" pagination="true">
         <thead>
@@ -47,33 +47,33 @@
 	<!-- define boh add/modify dialog -->
 		<div id="modifydlg" class="easyui-dialog" fit="true" closed="true" buttons="#modifydlgbtn">
 		<form id="fm" method="post">
-			 <table cellpadding="5" >
+			 <table cellpadding="5"  width="50%" >
 				<tr>
 					<td><label>接口功能概要：</label></td>
-					<td><input name="name"    required="true"></td>
+					<td><input name="Name"   class="easyui-validatebox" required=true></td>
 				</tr>
 				<tr>
 					<td><label>BOH接口</label></td>
-					<td><input name="bohName"   required="true"></td>
+					<td><input name="BohName"  ></td>
 				</tr>
 				<tr>
 					<td><label>BOH方法</label></td>
-					<td><input name="bohMethod"   required="true"></td>
+					<td><input name="BohMethod"   class="easyui-validatebox" required=true></td>
 				</tr>
 				<tr>
 					<td><label>BOH接口路由</label></td>
-					<td><input name="bohRoutePath"   required="true"></td>
+					<td><input name="BohRoutePath" class="easyui-validatebox"    required=true></td>
 				</tr>
 				<tr>
 					<td><label>BOH入参</label></td>
-					<td><input name="bohParameter"   required="true"></td>
+					<td><input name="BohParameter"  class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px"  ></td>
 				</tr>
 				<tr>
 					<td><label>描述信息</label></td>
 					<td ></td>
 				</tr>
 			</table>
-			<input  name="sampleTxt" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px" >
+			<input  name="SampleTxt" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px" >
 			<!-- tsp module -->
 			 <table id="tspTable" cellpadding="5">
 <!-- 				<tr>
@@ -106,9 +106,8 @@
 	}
 	
 	function editBoh(){
-		alert("a");
-		var row=$('#showprojdg').datagrid('getSelected');
-		alert(row.id);
+		var row=$('#showbohdlg').datagrid('getSelected');
+		alert(JSON.stringify(row));
 		if(row){
 			$('#modifydlg').dialog('open').dialog('setTitle','修改项目');
 			$('#fm').form('load',row);

@@ -4,7 +4,7 @@ import java.sql.*;
 
 /**
  * Description:
- * <br/>ÍøÕ¾: <a href="http://www.crazyit.org">·è¿ñJavaÁªÃË</a> 
+ * <br/>ï¿½ï¿½Õ¾: <a href="http://www.crazyit.org">ï¿½ï¿½ï¿½Javaï¿½ï¿½ï¿½ï¿½</a> 
  * <br/>Copyright (C), 2001-2012, Yeeku.H.Lee
  * <br/>This program is protected by copyright laws.
  * <br/>Program Name:
@@ -15,10 +15,10 @@ import java.sql.*;
 public class Daodb
 {
 	private Connection conn;
-	private String driver;
-	private String url;
-	private String username;
-	private String pass;
+	private String driver="com.mysql.jdbc.Driver";
+	private String url="jdbc:mysql://localhost:3306/mobcenter";
+	private String username="root";
+	private String pass="@MonLey880124";
 	public Daodb()
 	{
 	}
@@ -30,7 +30,7 @@ public class Daodb
 		this.username = username;
 		this.pass = pass; 
 	}
-	//ÏÂÃæÊÇ¸÷¸ö³ÉÔ±ÊôÐÔµÄsetterºÍgetter·½·¨
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½Ôµï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setDriver(String driver) {
 		this.driver = driver; 
 	}
@@ -55,7 +55,7 @@ public class Daodb
 	public String getPass() {
 		return (this.pass); 
 	}
-	//»ñÈ¡Êý¾Ý¿âÁ¬½Ó
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	public Connection getConnection() throws Exception
 	{
 		if (conn == null)
@@ -66,7 +66,7 @@ public class Daodb
 		}
 		return conn;
 	}
-	//²åÈë¼ÇÂ¼
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Â¼
 	public int insert(String sql , Object... args)
 		throws Exception
 	{
@@ -88,7 +88,7 @@ public class Daodb
 		pstmt.close();
 		return key;
 	}
-	//Ö´ÐÐ²éÑ¯
+	//Ö´ï¿½Ð²ï¿½Ñ¯
 	public ResultSet query(String sql , Object... args)
 		throws Exception
 	{
@@ -99,7 +99,7 @@ public class Daodb
 		}
 		return pstmt.executeQuery();
 	}
-	//Ö´ÐÐÐÞ¸Ä
+	//Ö´ï¿½ï¿½ï¿½Þ¸ï¿½
 	public void modify(String sql , Object... args)
 		throws Exception
 	{
@@ -118,7 +118,7 @@ public class Daodb
 		pstmt.get
 	}*/
 	
-	//¹Ø±ÕÊý¾Ý¿âÁ¬½ÓµÄ·½·¨
+	//ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ÓµÄ·ï¿½ï¿½ï¿½
 	public void closeConn()
 		throws Exception
 	{

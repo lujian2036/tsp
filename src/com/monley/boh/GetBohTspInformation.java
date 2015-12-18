@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.plaf.basic.BasicTabbedPaneUI.TabSelectionHandler;
 
 import com.google.gson.Gson;
+import com.monley.bean.BohTspMapInformation;
 import com.monley.db.Daodb;
 import com.monley.db.Tab_boh;
 import com.monley.db.Tab_tspserver_boh_relation;
@@ -41,57 +43,49 @@ public class GetBohTspInformation extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		PrintWriter out=response.getWriter();
-		ArrayList<Tab_boh> bohList = new ArrayList<>();
-		
-		ArrayList<TspBohRelation> tspBohRelationAll = new ArrayList<>();
+		BohTspMapInformation bohTspMapInformation = new BohTspMapInformation();
+		ArrayList<HashMap<String, Object>> tspBohRelationAll = new ArrayList<>();
+			
 		
 		int page=Integer.parseInt(request.getParameter("page"));
 		int rows=Integer.parseInt(request.getParameter("rows"));
 		int offset=((page-1)*rows)>=0?((page-1)*rows):1;
 		
-		Daodb  db = new Daodb("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mobcenter", "root", "security");
+		Daodb  db = new Daodb();
 		
 		//get boh
 		try {
 			ResultSet rs = db.query("select ID,Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt from mobcenter.Boh limit ?,?",offset,rows);
 			while(rs.next()){
-				Tab_boh bohTmp=new Tab_boh();
-				bohTmp.setID(rs.getInt("ID"));
-				bohTmp.setName(rs.getString("name"));
-				bohTmp.setBohName(rs.getString("bohName"));
-				bohTmp.setBohMethod(rs.getString("BohMethod"));
-				bohTmp.setBohRoutePath(rs.getString("BohRoutePath"));
-				bohTmp.setBohParameter(rs.getString("BohParameter"));
-				bohTmp.setParameterDecode(rs.getInt("ParameterDecode"));
-				bohTmp.setReturnDecode(rs.getInt("ReturnDecode"));
-				bohTmp.setSampleTxt(rs.getString("SampleTxt"));
-				bohList.add(bohTmp);
-			}
-			
-			//get tsp information join boh_id
-			for (Tab_boh e : bohList) {
-				ArrayList<TspBohRelationObj> tspBohRelation =new ArrayList<>();
-				System.out.printf("the id is : %d \r\n" ,e.getID());
-				rs=db.query("select mobcenter.Tsp_server.ID as ID, Name , ServiceHost , NoteInformation from mobcenter.Tsp_server join mobcenter.TspServer_Boh_relation on mobcenter.Tsp_server.ID = mobcenter.TspServer_Boh_relation.Tsp_server_ID where mobcenter.TspServer_Boh_relation.Boh_ID=?", e.getID());
-				while(rs.next()){
-					TspBohRelationObj tbr=new TspBohRelationObj();
-					tbr.setTsp_server_ID(rs.getInt("ID"));
-					tbr.setTsp_server_name(rs.getString("Name"));
-					tbr.setTsp_ServiceHost(rs.getString("ServiceHost"));
-					tspBohRelation.add(tbr);
-					System.out.printf("ths tsp is %s \r\n", tbr.getTsp_server_ID()+tbr.getTsp_server_name()+tbr.getTsp_ServiceHost());
-				}
-				tspBohRelationAll.add(new TspBohRelation(e,tspBohRelation));
+				HashMap<String, Object> bohTmp=new HashMap<>();
+				bohTmp.put("ID",rs.getInt("ID"));
+				bohTmp.put("Name",rs.getString("Name"));
+				bohTmp.put("BohName",rs.getString("BohName"));
+				bohTmp.put("BohMethod",rs.getString("BohMethod"));
+				bohTmp.put("BohRoutePath",rs.getString("BohRoutePath"));
+				bohTmp.put("BohParameter",rs.getString("BohParameter"));
+				bohTmp.put("ParameterDecode",rs.getInt("ParameterDecode"));
+				bohTmp.put("ReturnDecode",rs.getInt("ReturnDecode"));
+				bohTmp.put("SampleTxt",rs.getString("SampleTxt"));
 				
+				
+				ResultSet rs_tsp=db.query("select mobcenter.Tsp_server.ID as ID, Name , ServiceHost , NoteInformation from mobcenter.Tsp_server join mobcenter.TspServer_Boh_relation on mobcenter.Tsp_server.ID = mobcenter.TspServer_Boh_relation.Tsp_server_ID where mobcenter.TspServer_Boh_relation.Boh_ID=?",rs.getInt("ID"));
+				while(rs_tsp.next()){
+					String tsp_id="tsp_"+rs_tsp.getInt("ID");
+					String tsp_name_id="tsp_name_"+rs_tsp.getInt("ID");
+					bohTmp.put(tsp_id,rs_tsp.getString("ServiceHost"));
+					bohTmp.put(tsp_name_id, rs_tsp.getString("Name"));
+					}
+				tspBohRelationAll.add(bohTmp);
 			}
-			GetAllTspBohInfor getAllTspBohInfor = new GetAllTspBohInfor();
 			rs=db.query("select count(1) from mobcenter.Boh");
 			if(rs.next()){
-				getAllTspBohInfor.setTotal(String.valueOf(rs.getInt(1)));
+				bohTspMapInformation.setTotal(rs.getInt(1));
 			}
-			getAllTspBohInfor.setRows(tspBohRelationAll);
+			bohTspMapInformation.setRows(tspBohRelationAll);
+			
 			Gson gson=new Gson();
-			String strJson=gson.toJson(getAllTspBohInfor);
+			String strJson=gson.toJson(bohTspMapInformation);
 			out.print(strJson);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

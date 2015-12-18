@@ -49,7 +49,7 @@ public class GetBohTspInformation_new extends HttpServlet {
 		int rows=Integer.parseInt(request.getParameter("rows"));
 		int offset=((page-1)*rows)>=0?((page-1)*rows):1;
 		
-		Daodb  db = new Daodb("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mobcenter", "root", "security");
+		Daodb  db = new Daodb();
 		
 		//get boh
 		try {

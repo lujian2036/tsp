@@ -41,7 +41,10 @@ public class TspInformation extends HttpServlet {
 		PrintWriter out =response.getWriter();
 		TspServerInformation totalTspInformation = new TspServerInformation();
 		
-		Daodb  db = new Daodb("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mobcenter", "root", "security");
+		
+		
+		
+		Daodb  db = new Daodb();
 		try {
 			ResultSet rs=db.query("select count(1) from mobcenter.Tsp_server");
 			if(rs.next()){

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,18 +44,29 @@ public class AddBoH extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		boolean debug=true; //debug switch
+		
 		PrintWriter out = response.getWriter();
 		int key=-1; //define boh var,store the id
 		int tspCount=-1; //define tsp var,store sum tsp count
 		ArrayList<Tab_tspserver_boh_relation> tspFromPost = new ArrayList<>(); //get tsp paramter
 		ResultSummary returnRes = new ResultSummary();
 		//get post boh data
-		String name = request.getParameter("name").trim();
-		String bohName = request.getParameter("bohName").trim();
-		String bohMethod = request.getParameter("bohMethod").trim();
-		String bohRoutePath = request.getParameter("bohRoutePath").trim();
-		String bohParameter = request.getParameter("bohParameter");
-		String sampleTxt = request.getParameter("sampleTxt");
+		String name = request.getParameter("Name").trim();
+		String bohName = request.getParameter("BohName").trim();
+		String bohMethod = request.getParameter("BohMethod").trim();
+		String bohRoutePath = request.getParameter("BohRoutePath").trim();
+		String bohParameter = request.getParameter("BohParameter");
+		String sampleTxt = request.getParameter("SampleTxt");
+		Enumeration<String>  t=request.getParameterNames();
+		
+		if(debug){
+			while (t.hasMoreElements()) {
+				String e = (String) t.nextElement();
+				System.out.println(e);
+			}
+			
+		}
 		
 		if(name.length()==0||bohName.length()==0||bohMethod.length()==0||bohRoutePath.length()==0){
 			Gson gson = new Gson();
@@ -69,12 +81,15 @@ public class AddBoH extends HttpServlet {
 		//String tsp_2 = request.getParameter("tsp_2");
 		//String tsp_3 = request.getParameter("tsp_3");
 		
-		Daodb  db = new Daodb("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mobcenter", "root", "security");
+		Daodb  db = new Daodb();
 		try {
 			 key = db.insert("insert into mobcenter.boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt)  values (?,?,?,?,?,?)",
 															name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt);
-			System.out.printf("key is %s",key);
-			System.out.println();
+			if(debug){
+				System.out.printf("key is %s",key);
+				System.out.println();
+			}
+			
 			
 			//get tsp information
 			ArrayList<Tab_tspserver> tspList=new ArrayList<>();
@@ -97,10 +112,13 @@ public class AddBoH extends HttpServlet {
 				tspFromPost.add(tsp);
 			}
 			
-			for (Tab_tspserver_boh_relation tsp : tspFromPost) {
-				System.out.printf("the tsp_boh_relation data is %s", "Boh key: "+ tsp.getBoh_ID() +" Tsp key: " +tsp.getTsp_server_ID()+" Host : "+tsp.getServiceHost());
-				System.out.println();
+			if(debug){
+				for (Tab_tspserver_boh_relation tsp : tspFromPost) {
+					System.out.printf("the tsp_boh_relation data is %s", "Boh key: "+ tsp.getBoh_ID() +" Tsp key: " +tsp.getTsp_server_ID()+" Host : "+tsp.getServiceHost());
+					System.out.println();
+				}
 			}
+			
 			
 			//insert boh_tsp_relation to db
 			for (Tab_tspserver_boh_relation tsp : tspFromPost) {
