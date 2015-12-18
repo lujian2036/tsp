@@ -4,7 +4,7 @@ import java.sql.*;
 
 /**
  * Description:
- * <br/>��վ: <a href="http://www.crazyit.org">���Java����</a> 
+ * <br/>锟斤拷站: <a href="http://www.crazyit.org">锟斤拷锟絁ava锟斤拷锟斤拷</a> 
  * <br/>Copyright (C), 2001-2012, Yeeku.H.Lee
  * <br/>This program is protected by copyright laws.
  * <br/>Program Name:
@@ -18,7 +18,7 @@ public class Daodb
 	private String driver="com.mysql.jdbc.Driver";
 	private String url="jdbc:mysql://localhost:3306/mobcenter";
 	private String username="root";
-	private String pass="@MonLey880124";
+	private String pass="security";
 	public Daodb()
 	{
 	}
@@ -30,7 +30,7 @@ public class Daodb
 		this.username = username;
 		this.pass = pass; 
 	}
-	//�����Ǹ�����Ա���Ե�setter��getter����
+	//锟斤拷锟斤拷锟角革拷锟斤拷锟斤拷员锟斤拷锟皆碉拷setter锟斤拷getter锟斤拷锟斤拷
 	public void setDriver(String driver) {
 		this.driver = driver; 
 	}
@@ -55,7 +55,7 @@ public class Daodb
 	public String getPass() {
 		return (this.pass); 
 	}
-	//��ȡ���ݿ�����
+	//锟斤拷取锟斤拷锟捷匡拷锟斤拷锟斤拷
 	public Connection getConnection() throws Exception
 	{
 		if (conn == null)
@@ -66,7 +66,7 @@ public class Daodb
 		}
 		return conn;
 	}
-	//�����¼
+	//锟斤拷锟斤拷锟铰�
 	public int insert(String sql , Object... args)
 		throws Exception
 	{
@@ -88,7 +88,7 @@ public class Daodb
 		pstmt.close();
 		return key;
 	}
-	//ִ�в�ѯ
+	//执锟叫诧拷询
 	public ResultSet query(String sql , Object... args)
 		throws Exception
 	{
@@ -99,7 +99,7 @@ public class Daodb
 		}
 		return pstmt.executeQuery();
 	}
-	//ִ���޸�
+	//执锟斤拷锟睫革拷
 	public void modify(String sql , Object... args)
 		throws Exception
 	{
@@ -118,7 +118,7 @@ public class Daodb
 		pstmt.get
 	}*/
 	
-	//�ر����ݿ����ӵķ���
+	//锟截憋拷锟斤拷锟捷匡拷锟斤拷锟接的凤拷锟斤拷
 	public void closeConn()
 		throws Exception
 	{
