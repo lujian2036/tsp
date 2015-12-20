@@ -58,6 +58,13 @@ public class AddTsp extends HttpServlet {
 			Gson gson = new Gson();
 			String strJson=gson.toJson(returnRes);
 			out.print(strJson);
+		}finally{
+			try {
+				db.closeConn();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

@@ -59,6 +59,13 @@ public class UpdateTsp extends HttpServlet {
 			result.setInfo("modify fail,fail to connect sql");
 			String jsonStr=gson.toJson(result);
 			out.print(jsonStr);
+		}finally{
+			try {
+				db.closeConn();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

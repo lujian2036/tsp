@@ -47,37 +47,37 @@
 	<!-- define boh add/modify dialog -->
 		<div id="modifydlg" class="easyui-dialog" fit="true" closed="true" buttons="#modifydlgbtn">
 		<form id="fm" method="post">
-			 <table cellpadding="5"  width="50%">
+			 <table cellpadding="5"  width="50%" >
 				<tr>
 					<td><label>接口功能概要：</label></td>
-					<td><input name="Name"   class="easyui-validatebox" required=true></td>
+					<td><input name="Name"   class="easyui-validatebox" required=true style="width:100%" ></td>
 				</tr>
 				<tr>
-					<td><label>BOH接口</label></td>
-					<td><input name="BohName"  ></td>
+					<td><label>BOH接口：</label></td>
+					<td><input name="BohName" style="width:100%" ></td>
 				</tr>
 				<tr>
-					<td><label>BOH方法</label></td>
+					<td><label>BOH方法：</label></td>
 					<td>
-					<select class="easyui-combobox" name="BohMethod"  editable="false"  required=true  width="500px">
-						<option value="GET" selected=true>GET</option>
+					<select class="easyui-combobox" name="BohMethod"  editable="false"  required=true >
+						<option value="GET" >GET</option>
 						<option value="POST">POST</option>
 					</select>
 					</td>
 					
 				</tr>
 				<tr>
-					<td><label>BOH接口路由</label></td>
-					<td><input name="BohRoutePath" class="easyui-validatebox"    required=true></td>
+					<td><label>BOH接口路由：</label></td>
+					<td><input name="BohRoutePath" class="easyui-validatebox"    required=true style="width:100%" ></td>
 				</tr>
 				<tr>
-					<td><label>BOH入参</label></td>
+					<td><label>BOH入参：</label></td>
 					<td>
 					<input name="BohParameter"  class="easyui-textbox" data-options="multiline:true" style="width:100%;height:100px"  >
 					</td>
 				</tr>
 				<tr>
-					<td><label>描述信息</label></td>
+					<td><label>描述信息：</label></td>
 					<td ></td>
 				</tr>
 			</table>
@@ -97,7 +97,7 @@
 	//add tsp dynamic
 	$.getJSON("./tspinformation",function(data){
 		$.each(data.rows,function(i,value){
-			var trtd='<tr><td><label>'+value.name+ '</label></td><td><input name="'+'tsp_'+value.id + '"    required="true"></td></tr>';
+			var trtd='<tr><td><label>'+value.name+'：'+ '</label></td><td><input name="'+'tsp_'+value.id + '" class="easyui-textbox"></td></tr>';
 			$("#tspTable").append(trtd);
 		});
 
@@ -114,6 +114,8 @@
 	}
 	
 	function editBoh(){
+		//clear before data 
+		$('#fm').form('clear');
 		var row=$('#showbohdlg').datagrid('getSelected');
 		if(row){
 			$('#modifydlg').dialog('open').dialog('setTitle','修改BOH服务');

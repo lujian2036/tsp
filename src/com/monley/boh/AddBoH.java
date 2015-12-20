@@ -84,7 +84,7 @@ public class AddBoH extends HttpServlet {
 		
 		Daodb  db = new Daodb();
 		try {
-			 key = db.insert("insert into mobcenter.boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt)  values (?,?,?,?,?,?)",
+			 key = db.insert("insert into mobcenter.Boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt)  values (?,?,?,?,?,?)",
 															name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt);
 			if(debug){
 				System.out.printf("key is %s",key);
@@ -94,7 +94,7 @@ public class AddBoH extends HttpServlet {
 			
 			//get tsp information
 			ArrayList<Tab_tspserver> tspList=new ArrayList<>();
-			ResultSet rs = db.query("select ID,Name from mobcenter.tsp_server");
+			ResultSet rs = db.query("select ID,Name from mobcenter.Tsp_server");
 			
 			while(rs.next()){
 				Tab_tspserver tspTmp =new Tab_tspserver();
@@ -123,7 +123,7 @@ public class AddBoH extends HttpServlet {
 			
 			//insert boh_tsp_relation to db
 			for (Tab_tspserver_boh_relation tsp : tspFromPost) {
-				db.insert("insert into mobcenter.tspserver_boh_relation(Boh_ID,Tsp_server_ID,ServiceHost) values (?,?,?)", 
+				db.insert("insert into mobcenter.TspServer_Boh_relation(Boh_ID,Tsp_server_ID,ServiceHost) values (?,?,?)", 
 																		tsp.getBoh_ID(),tsp.getTsp_server_ID(),tsp.getServiceHost());
 			}
 			returnRes.setSuccess(true);
@@ -140,6 +140,13 @@ public class AddBoH extends HttpServlet {
 			Gson gson = new Gson();
 			String strJson=gson.toJson(returnRes);
 			out.print(strJson);
+		}finally {
+			try {
+				db.closeConn();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		

@@ -18,7 +18,7 @@ public class Daodb
 	private String driver="com.mysql.jdbc.Driver";
 	private String url="jdbc:mysql://localhost:3306/mobcenter";
 	private String username="root";
-	private String pass="security";
+	private String pass="@security";
 	public Daodb()
 	{
 	}

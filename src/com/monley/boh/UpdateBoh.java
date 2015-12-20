@@ -2,6 +2,7 @@ package com.monley.boh;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -75,7 +76,17 @@ public class UpdateBoh extends HttpServlet {
 			db.modify("update mobcenter.Boh set Name=?,BohName=?,BohMethod=?,BohRoutePath=?,BohParameter=?,SampleTxt=? where ID=?", name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt,id);
 			
 			for(int i=0;i<tspRelationList.size();i++){
-				db.modify("update mobcenter.TspServer_Boh_relation set ServiceHost=? where Boh_ID=? and Tsp_server_ID =?", tspRelationList.get(i).getTsp_server_name(),id,tspRelationList.get(i).getTsp_server_ID());
+				//judge if boh tsp relation already exist, fix bug for boh tsp relation exist ,but add tsp again
+				ResultSet rs=db.query("select count(1) from  mobcenter.TspServer_Boh_relation where  Boh_ID=? and Tsp_server_ID =?",  id,tspRelationList.get(i).getTsp_server_ID()); 
+				rs.next();
+				
+				if(0==rs.getInt(1)){//not exist
+					db.insert("insert into mobcenter.TspServer_Boh_relation(Boh_ID,Tsp_server_ID,ServiceHost) values (?,?,?)", 
+																				id,tspRelationList.get(i).getTsp_server_ID(),tspRelationList.get(i).getTsp_server_name());
+				}else{
+					db.modify("update mobcenter.TspServer_Boh_relation set ServiceHost=? where Boh_ID=? and Tsp_server_ID =?", tspRelationList.get(i).getTsp_server_name(),id,tspRelationList.get(i).getTsp_server_ID());
+				}
+				
 			}
 			result.setSuccess(true);
 			result.setInfo("modify success");
@@ -89,6 +100,13 @@ public class UpdateBoh extends HttpServlet {
 			result.setInfo("modify fail,fail to connect sql");
 			String jsonStr=gson.toJson(result);
 			out.print(jsonStr);
+		}finally{
+			try {
+				db.closeConn();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 		

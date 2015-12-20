@@ -54,6 +54,13 @@ public class DeleteTsp extends HttpServlet {
 			result.setInfo("delete fail,can not connect sql");
 			String jsonStr=gson.toJson(result);
 			out.print(jsonStr);
+		}finally{
+			try {
+				db.closeConn();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
