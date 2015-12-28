@@ -31,9 +31,24 @@ create table TspServer_Boh_relation(
 	ServiceHost text
 );
 
+create table Ris(
+	ID  int primary key auto_increment,
+	Name  text not null,
+	Ris_url text  not null,
+	Ris_Method text not null,
+	SampleTxt text 
+) comment 'store ris info';
+
+create table Ris_Parameter(
+	ID int primary key  auto_increment,
+	Ris_ID int not null,
+	ParameterSummary text,
+	ParameterInfo text 
+) comment 'store ris parameter information';
+
 
 -- dump data
 
-insert into Tsp_server values (null ,'tsp','tsp for main');
-insert into Tsp_server values (null ,'tsp1','tsp for slave1');
-insert into Tsp_server values (null ,'tsp2','tsp for slave2');
+-- insert into Tsp_server values (null ,'tsp','tsp for main');
+-- insert into Tsp_server values (null ,'tsp1','tsp for slave1');
+-- insert into Tsp_server values (null ,'tsp2','tsp for slave2');
