@@ -44,7 +44,7 @@ public class AddBoH extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		boolean debug=true; //debug switch
+		boolean debug=false; //debug switch
 		
 		PrintWriter out = response.getWriter();
 		int key=-1; //define boh var,store the id
@@ -52,6 +52,7 @@ public class AddBoH extends HttpServlet {
 		ArrayList<Tab_tspserver_boh_relation> tspFromPost = new ArrayList<>(); //get tsp paramter
 		ResultSummary returnRes = new ResultSummary();
 		//get post boh data
+		String treeviewid = request.getParameter("treeviewid");
 		String name = request.getParameter("Name").trim();
 		String bohName = request.getParameter("BohName");
 		String bohMethod = request.getParameter("BohMethod").trim();
@@ -84,8 +85,8 @@ public class AddBoH extends HttpServlet {
 		
 		Daodb  db = new Daodb();
 		try {
-			 key = db.insert("insert into mobcenter.Boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt)  values (?,?,?,?,?,?)",
-															name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt);
+			 key = db.insert("insert into mobcenter.Boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt,TreeViewID)  values (?,?,?,?,?,?)",
+															name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt,treeviewid);
 			if(debug){
 				System.out.printf("key is %s",key);
 				System.out.println();

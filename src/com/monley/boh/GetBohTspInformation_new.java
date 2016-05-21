@@ -54,7 +54,7 @@ public class GetBohTspInformation_new extends HttpServlet {
 		//get boh
 		try {
 			
-			ResultSet rs = db.query("select ID,Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt from mobcenter.Boh limit ?,?",offset,rows);
+			ResultSet rs = db.query("select mobcenter.Boh.ID as ID,mobcenter.Boh.Name as Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt,TreeViewID ,	mobcenter.TreeView.Name as TreeViewName from mobcenter.Boh join mobcenter.TreeView on mobcenter.Boh.TreeViewID =mobcenter.TreeView.ID   limit ?,?",offset,rows);
 			ArrayList<SingleBohTspRelation> arrSingleBohTspRelation= new ArrayList<>();
 			
 			while(rs.next()){
@@ -68,6 +68,8 @@ public class GetBohTspInformation_new extends HttpServlet {
 				bohTmp.setParameterDecode(rs.getInt("ParameterDecode"));
 				bohTmp.setReturnDecode(rs.getInt("ReturnDecode"));
 				bohTmp.setSampleTxt(rs.getString("SampleTxt"));
+				bohTmp.setTreeViewID(rs.getInt("TreeViewID"));
+				bohTmp.setTreeViewName(rs.getString("TreeViewName"));
 				
 				ResultSet rs_tsp=db.query("select mobcenter.Tsp_server.ID as ID, Name , ServiceHost , NoteInformation from mobcenter.Tsp_server join mobcenter.TspServer_Boh_relation on mobcenter.Tsp_server.ID = mobcenter.TspServer_Boh_relation.Tsp_server_ID where mobcenter.TspServer_Boh_relation.Boh_ID=?", rs.getInt("ID"));
 				ArrayList<TspBohRelationObj> arrTsp= new ArrayList<>();

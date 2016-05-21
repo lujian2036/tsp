@@ -48,6 +48,12 @@
 		<div id="modifydlg" class="easyui-dialog" fit="true" closed="true" buttons="#modifydlgbtn">
 		<form id="fm" method="post">
 			 <table cellpadding="5"  width="50%" >
+			   <tr>
+			   <td><label>接口分组:</label></td>
+			   	<td>
+			   	<input class="easyui-combobox" required=true name="treeviewid" data-options="url:'./treeviewJsonarrayinformation',method:'get',valueField:'id',textField:'name',panelHeight:'auto'">
+			   	</td>
+			   </tr>
 				<tr>
 					<td><label>接口功能概要：</label></td>
 					<td><input name="Name"   class="easyui-validatebox" required=true style="width:100%" ></td>

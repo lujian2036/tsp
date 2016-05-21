@@ -45,6 +45,7 @@ public class UpdateBoh extends HttpServlet {
 		
 		int id= Integer.parseInt(request.getParameter("id"));
 		//get post boh data
+		int treeviewid = Integer.parseInt(request.getParameter("treeviewid"));
 		String name = request.getParameter("Name").trim();
 		String bohName = request.getParameter("BohName");
 		String bohMethod = request.getParameter("BohMethod");
@@ -73,7 +74,7 @@ public class UpdateBoh extends HttpServlet {
 		Daodb db = new Daodb();
 		
 		try {
-			db.modify("update mobcenter.Boh set Name=?,BohName=?,BohMethod=?,BohRoutePath=?,BohParameter=?,SampleTxt=? where ID=?", name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt,id);
+			db.modify("update mobcenter.Boh set Name=?,BohName=?,BohMethod=?,BohRoutePath=?,BohParameter=?,SampleTxt=? ,TreeViewID = ? where ID=?", name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt,treeviewid,id);
 			
 			for(int i=0;i<tspRelationList.size();i++){
 				//judge if boh tsp relation already exist, fix bug for boh tsp relation exist ,but add tsp again

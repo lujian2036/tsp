@@ -423,6 +423,14 @@
 			
 $(document).ready(function(){
 		var tspJsonData;
+		var treeviewData;
+		$.getJSON("./treeviewinformation",function(data){
+			treeviewData=data;
+			$.each(data.rows,function(i,treeviewinfo){
+				$("#TreeViewName").append("<option value='"+treeviewinfo.id+"'>"+treeviewinfo.name+"</option>");
+			});
+		});
+		
 		$.getJSON("./getBohTspInformation_new?page=1&rows=1000",function(data){
 			tspJsonData=data;
 			$.each(data.rows,function(i,bohinfo){
@@ -430,6 +438,32 @@ $(document).ready(function(){
 			});
 		});
 		
+		
+		//when select elenemt select value 
+		$("#TreeViewName").change(function(e){
+			$("#radiodiv").empty();
+			$("#reqUrl").val("");
+			$("#reqParam").val("");
+			$("#SampleTxt").val("");
+			$("#reqQuery").empty();
+			$("#reqQuery").append("<option value=\"-1\" selected=\"selected\">请选择......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>");//add defaule option
+			
+			
+			var thisvalue=$(this).val();
+			if(thisvalue == -1){
+				$.each(tspJsonData.rows,function(i,bohinfo){
+					$("#reqQuery").append("<option value='"+bohinfo.ID+"'>"+bohinfo.Name+"</option>");
+				});
+			}else{
+				$.each(tspJsonData.rows,function(i,bohinfo){
+					if(thisvalue==bohinfo.TreeViewID){
+						$("#reqQuery").append("<option value='"+bohinfo.ID+"'>"+bohinfo.Name+"</option>");
+					}
+				});
+			}
+			
+			
+		});
 		
 		
 		//when select elenemt select value 
@@ -552,10 +586,16 @@ $(document).ready(function(){
 
 <body style="font:14px consolas">
     <div style="width:500px; margin:20px; padding: 20px;float: left; font:14px consolas;border: #666666 thin solid">
+    	<div style="float: left;">
+			<span >选择种类服务:</span>
+			<select id="TreeViewName"  style="border: #666666 thin solid" >
+				<option value="-1" selected="selected">请选择(可不选择此过滤项，默认全部接口都展示)......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+			</select>
+		</div><br /><br />
 		<div style="float: left;">
 			<span >选择查询内容:</span>
 			<select id="reqQuery"  style="border: #666666 thin solid" >
-				<option value="defaultvalue" selected="selected">请选择......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+				<option value="-1" selected="selected">请选择......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 			</select>
 		</div><br /><br />
 		<div>

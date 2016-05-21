@@ -14,7 +14,10 @@ public class SingleBohTspRelation {
 	private int ParameterDecode=1;
 	private int ReturnDecode=1;
 	private String SampleTxt;
+	private int TreeViewID=0;
+	private String TreeViewName="";
 	private ArrayList<TspBohRelationObj> arrtsp;
+	
 	public int getID() {
 		return ID;
 	}
@@ -74,6 +77,18 @@ public class SingleBohTspRelation {
 	}
 	public void setArrtsp(ArrayList<TspBohRelationObj> arrtsp) {
 		this.arrtsp = arrtsp;
+	}
+	public int getTreeViewID() {
+		return TreeViewID;
+	}
+	public void setTreeViewID(int treeViewID) {
+		TreeViewID = treeViewID;
+	}
+	public String getTreeViewName() {
+		return TreeViewName;
+	}
+	public void setTreeViewName(String treeViewName) {
+		TreeViewName = treeViewName;
 	}
 	
 

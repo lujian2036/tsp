@@ -2,6 +2,9 @@ package com.monley.db;
 
 import java.sql.*;
 
+import com.monley.bean.DBConfigureBean;
+import com.monley.configure.DBConfig;
+
 /**
  * Description:
  * <br/>锟斤拷站: <a href="http://www.crazyit.org">锟斤拷锟絁ava锟斤拷锟斤拷</a> 
@@ -16,11 +19,25 @@ public class Daodb
 {
 	private Connection conn;
 	private String driver="com.mysql.jdbc.Driver";
-	private String url="jdbc:mysql://localhost:3306/mobcenter";
-	private String username="root";
-	private String pass="@MonLey880124";
+	private String username="";
+	private String pass="";
+	private String DataBase_IP="";
+	private String DataBase_Port="";
+	private String DataBase_Name="";
+	private String url="jdbc:mysql://" + DataBase_IP +":" + DataBase_Port + "/" + DataBase_Name;
+	
 	public Daodb()
 	{
+		DBConfig dbConfig = new DBConfig();
+		DBConfigureBean dbconfigure = new DBConfigureBean();
+		dbconfigure = dbConfig.getDBConfigure();
+		this.DataBase_IP= dbconfigure.getDataBase_IP();
+		this.DataBase_Port=dbconfigure.getDataBase_Port();
+		this.DataBase_Name=dbconfigure.getDataBase_Name();
+		this.username=dbconfigure.getDataBase_User();
+		this.pass=dbconfigure.getDataBase_Pwd();
+		this.url="jdbc:mysql://" + DataBase_IP +":" + DataBase_Port + "/" + DataBase_Name;
+		
 	}
 	public Daodb(String driver , String url 
 		, String username , String pass)

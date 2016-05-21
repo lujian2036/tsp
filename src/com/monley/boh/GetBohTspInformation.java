@@ -55,7 +55,7 @@ public class GetBohTspInformation extends HttpServlet {
 		
 		//get boh
 		try {
-			ResultSet rs = db.query("select ID,Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt from mobcenter.Boh order by id desc limit ?,? ",offset,rows);
+			ResultSet rs = db.query("select ID,Name,BohName,BohMethod,BohRoutePath,BohParameter,ParameterDecode,ReturnDecode,SampleTxt,TreeViewID from mobcenter.Boh order by id desc limit ?,? ",offset,rows);
 			while(rs.next()){
 				HashMap<String, Object> bohTmp=new HashMap<>();
 				bohTmp.put("ID",rs.getInt("ID"));
@@ -67,6 +67,7 @@ public class GetBohTspInformation extends HttpServlet {
 				bohTmp.put("ParameterDecode",rs.getInt("ParameterDecode"));
 				bohTmp.put("ReturnDecode",rs.getInt("ReturnDecode"));
 				bohTmp.put("SampleTxt",rs.getString("SampleTxt"));
+				bohTmp.put("treeviewid", rs.getString("TreeViewID"));
 				
 				
 				ResultSet rs_tsp=db.query("select mobcenter.Tsp_server.ID as ID, Name , ServiceHost , NoteInformation from mobcenter.Tsp_server join mobcenter.TspServer_Boh_relation on mobcenter.Tsp_server.ID = mobcenter.TspServer_Boh_relation.Tsp_server_ID where mobcenter.TspServer_Boh_relation.Boh_ID=?",rs.getInt("ID"));
