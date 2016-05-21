@@ -14,7 +14,8 @@ create table Boh(
 	BohParameter text,
 	ParameterDecode tinyint default 1,
 	ReturnDecode  tinyint  default 1,
-	SampleTxt  text
+	SampleTxt  text,
+	TreeViewID int default 0
 );
 
 
@@ -46,7 +47,11 @@ create table Ris_Parameter(
 	ParameterInfo text 
 ) comment 'store ris parameter information';
 
-
+create table TreeView(
+	ID int primary key  auto_increment,
+	NAME text not null,
+	Description text 
+) comment 'store treeview information';
 -- dump data
 
 -- insert into Tsp_server values (null ,'tsp','tsp for main');
