@@ -12,15 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.w3c.dom.html.HTMLTableSectionElement;
-
 import com.google.gson.Gson;
 import com.monley.db.Daodb;
 import com.monley.db.Tab_tspserver;
 import com.monley.db.Tab_tspserver_boh_relation;
 import com.monley.result.ResultSummary;
-
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 
 
 /**
@@ -85,7 +81,7 @@ public class AddBoH extends HttpServlet {
 		
 		Daodb  db = new Daodb();
 		try {
-			 key = db.insert("insert into mobcenter.Boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt,TreeViewID)  values (?,?,?,?,?,?)",
+			 key = db.insert("insert into mobcenter.Boh(Name,BohName,BohMethod,BohRoutePath,BohParameter,SampleTxt,TreeViewID)  values (?,?,?,?,?,?,?)",
 															name,bohName,bohMethod,bohRoutePath,bohParameter,sampleTxt,treeviewid);
 			if(debug){
 				System.out.printf("key is %s",key);

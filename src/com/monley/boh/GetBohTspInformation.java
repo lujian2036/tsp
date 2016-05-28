@@ -11,15 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.basic.BasicTabbedPaneUI.TabSelectionHandler;
-
 import com.google.gson.Gson;
 import com.monley.bean.BohTspMapInformation;
 import com.monley.db.Daodb;
-import com.monley.db.Tab_boh;
-import com.monley.db.Tab_tspserver_boh_relation;
 
-import javafx.scene.control.Tab;
 
 /**
  * Servlet implementation class GetBohTspInformation

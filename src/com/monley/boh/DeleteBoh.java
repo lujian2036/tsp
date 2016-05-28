@@ -2,9 +2,6 @@ package com.monley.boh;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Enumeration;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.monley.db.Daodb;
-import com.monley.db.Tab_tspserver_boh_relation;
 import com.monley.result.ResultSummary;
 
 /**
